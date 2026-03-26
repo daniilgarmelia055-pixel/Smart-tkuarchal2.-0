@@ -2,115 +2,97 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>Tkuarchal Gram</title>
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Метка обновления v=1.1 -->
+    <title>Tkuarchal Gram v1.1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net">
     <style>
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #fff; color: #262626; padding-bottom: 60px; }
+        /* СВЕЖИЙ ИНСТА-СТИЛЬ */
+        body { font-family: -apple-system, system-ui, sans-serif; margin: 0; background: #fff; padding-bottom: 60px; color: #262626; }
+        .header { background: #fff; border-bottom: 1px solid #efefef; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 22px; font-weight: bold; font-family: 'Georgia', serif; font-style: italic; }
         
-        /* Header */
-        .header { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #dbdbdb; position: sticky; top: 0; background: #fff; z-index: 1000; }
-        .logo { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 22px; }
-
-        /* Stories */
-        .stories { display: flex; overflow-x: auto; padding: 10px 0; border-bottom: 1px solid #dbdbdb; gap: 15px; }
+        /* СТОРИС С ГРАДИЕНТОМ */
+        .stories { display: flex; padding: 15px 10px; background: #fff; border-bottom: 1px solid #efefef; overflow-x: auto; gap: 15px; }
         .stories::-webkit-scrollbar { display: none; }
-        .story { min-width: 75px; text-align: center; }
-        .story-circle { width: 64px; height: 64px; border-radius: 50%; padding: 2px; border: 2px solid #e1306c; margin: 0 auto 5px; }
-        .story-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
-        .story span { font-size: 11px; }
+        .story { text-align: center; min-width: 65px; }
+        .story-ring { width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding: 2px; margin: 0 auto; }
+        .story-img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
+        .story span { font-size: 11px; display: block; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-        /* Post */
-        .post { border-bottom: 1px solid #dbdbdb; margin-bottom: 10px; }
-        .post-header { display: flex; align-items: center; padding: 10px; }
-        .post-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; margin-right: 10px; }
-        .post-user { font-weight: 600; font-size: 13px; }
-        .post-img { width: 100%; height: auto; max-height: 400px; object-fit: cover; }
-        .post-actions { padding: 10px; display: flex; gap: 15px; font-size: 22px; }
-        .post-likes { padding: 0 10px; font-weight: 600; font-size: 13px; }
-        .post-caption { padding: 5px 10px 15px; font-size: 14px; line-height: 1.4; }
-        .post-caption b { margin-right: 5px; }
-        .btn-map { background: #0095f6; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-top: 10px; display: inline-block; text-decoration: none; }
+        /* ПОСТЫ */
+        .post { background: #fff; margin-bottom: 20px; }
+        .post-header { padding: 12px; display: flex; align-items: center; font-weight: 600; font-size: 14px; }
+        .post-header i { margin-right: 8px; font-size: 20px; color: #0095f6; }
+        .post-img { width: 100%; display: block; max-height: 450px; object-fit: cover; }
+        .post-content { padding: 12px; }
+        .post-actions { display: flex; gap: 18px; font-size: 24px; margin-bottom: 8px; }
+        .post-likes { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+        .post-caption { font-size: 14px; line-height: 1.4; }
+        
+        /* КНОПКА КАРТЫ */
+        .btn-map { background: #fafafa; color: #262626; text-decoration: none; padding: 8px 15px; border-radius: 8px; border: 1px solid #dbdbdb; display: inline-block; font-size: 13px; font-weight: 600; margin-top: 12px; width: 100%; text-align: center; box-sizing: border-box; }
 
-        /* Bottom Nav */
-        .nav { position: fixed; bottom: 0; width: 100%; height: 50px; background: #fff; border-top: 1px solid #dbdbdb; display: flex; justify-content: space-around; align-items: center; }
-        .nav i { font-size: 24px; color: #262626; }
-        .profile-icon { width: 24px; height: 24px; border-radius: 50%; background: #ccc; }
+        /* МЕНЮ ВНИЗУ */
+        .nav { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #efefef; display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        .nav i { font-size: 26px; color: #262626; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <i class="bi bi-camera"></i>
-        <div class="logo">Tkuarchal</div>
-        <i class="bi bi-send"></i>
+<div class="header">
+    <i class="bi bi-plus-square"></i>
+    <div class="logo">Tkuarchal</div>
+    <i class="bi bi-chat-dots"></i>
+</div>
+
+<!-- СТОРИС -->
+<div class="stories">
+    <div class="story">
+        <div class="story-ring"><img class="story-img" src="https://img.tourister.ru"></div>
+        <span>Водопады</span>
     </div>
-
-    <!-- Stories -->
-    <div class="stories">
-        <div class="story">
-            <div class="story-circle"><img class="story-img" src="https://img.tourister.ru"></div>
-            <span>Водопады</span>
-        </div>
-        <div class="story">
-            <div class="story-circle"><img class="story-img" src="https://img.tourister.ru"></div>
-            <span>Акармара</span>
-        </div>
-        <div class="story">
-            <div class="story-circle"><img class="story-img" src="https://sun9-38.userapi.com"></div>
-            <span>ГРЭС</span>
-        </div>
-        <div class="story">
-            <div class="story-circle"><div class="story-img" style="background:#eee; display:flex; align-items:center; justify-content:center;">+</div></div>
-            <span>Добавить</span>
-        </div>
+    <div class="story">
+        <div class="story-ring"><img class="story-img" src="https://img.tourister.ru"></div>
+        <span>Акармара</span>
     </div>
-
-    <!-- Feed -->
-    <div id="feed">
-        <!-- Пост 1: Погода -->
-        <div class="post">
-            <div class="post-header">
-                <div class="post-avatar" style="background: #3498db; display:flex; align-items:center; justify-content:center; color:#fff;">☀️</div><div class="post-user">Метео_Ткуарчал</div>
-            </div>
-            <div style="background: linear-gradient(135deg, #74ebd5, #acb6e5); height: 200px; display: flex; align-items:center; justify-content:center; color:#fff; font-size: 40px; font-weight: bold;">+22°C</div>
-            <div class="post-actions"><i class="bi bi-heart"></i> <i class="bi bi-chat"></i> <i class="bi bi-send"></i></div>
-            <div class="post-likes">256 отметок "Нравится"</div>
-            <div class="post-caption"><b>Метео_Ткуарчал</b> Сегодня в городе идеальная погода для похода на водопады! 🌤</div>
-        </div>
-
-        <!-- Пост 2: Туризм -->
-        <div class="post">
-            <div class="post-header">
-                <div class="post-avatar"><img src="https://img.tourister.ru" class="story-img"></div>
-                <div class="post-user">Go_Abkhazia</div>
-            </div>
-            <img src="https://img.tourister.ru" class="post-img">
-            <div class="post-actions"><i class="bi bi-heart" style="color:red;"></i> <i class="bi bi-chat"></i> <i class="bi bi-send"></i></div>
-            <div class="post-likes">1,042 отметок "Нравится"</div>
-            <div class="post-caption">
-                <b>Go_Abkhazia</b> Мощь водопада Великан просто поражает! Вы уже были там в этом сезоне? <br>
-                <a href="https://maps.google.com" class="btn-map">📍 Проложить маршрут</a>
-            </div>
-        </div>
+    <div class="story">
+        <div class="story-ring" style="background:#dbdbdb;"><div style="width:100%; height:100%; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; font-size:24px;">+</div></div>
+        <span>Ваше</span>
     </div>
+</div>
 
-    <!-- Nav Bar -->
-    <div class="nav">
-        <i class="bi bi-house-door-fill"></i>
-        <i class="bi bi-search" onclick="alert('Поиск временно недоступен')"></i>
-        <i class="bi bi-plus-square" onclick="app_idea()"></i>
-        <i class="bi bi-trophy"></i>
-        <div class="profile-icon" onclick="alert('Твой профиль: Даниил')"></div>
+<!-- ЛЕНТА -->
+<div class="post">
+    <div class="post-header"><i class="bi bi-cloud-sun"></i> Погода в Ткуарчале</div>
+    <div style="background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); color: white; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-shadow: 0 2px 4px rgba(0,0,0,0.2);"><div style="font-size: 48px; font-weight: bold;">+22°C</div>
+        <div style="font-size: 16px;">Сегодня солнечно</div>
     </div>
+    <div class="post-content">
+        <div class="post-actions"><i class="bi bi-heart"></i> <i class="bi bi-chat"></i> <i class="bi bi-send"></i></div>
+        <div class="post-likes">Нравится: 142</div>
+        <div class="post-caption"><b>Метео_Ткуарчал:</b> Отличный день для прогулок! Не забудьте взять воду.</div>
+    </div>
+</div>
 
-    <script>
-        function app_idea() {
-            let idea = prompt("Твоя идея для города:");
-            if(idea) alert("Идея '" + idea + "' отправлена админу!");
-        }
-    </script>
+<div class="post">
+    <div class="post-header"><i class="bi bi-geo-alt"></i> Водопад Великан</div>
+    <img class="post-img" src="https://img.tourister.ru">
+    <div class="post-content">
+        <div class="post-actions"><i class="bi bi-heart-fill" style="color:#ed4956;"></i> <i class="bi bi-chat"></i> <i class="bi bi-send"></i></div>
+        <div class="post-likes">Нравится: 1,054</div>
+        <div class="post-caption"><b>Ткуарчал_Гид:</b> Самый мощный водопад в наших горах. Обязательно к посещению!</div>
+        <a href="https://maps.google.com" class="btn-map">Посмотреть на карте</a>
+    </div>
+</div>
+
+<div class="nav">
+    <i class="bi bi-house-door-fill"></i>
+    <i class="bi bi-search"></i>
+    <i class="bi bi-play-btn"></i>
+    <i class="bi bi-trophy"></i>
+    <i class="bi bi-person-circle" style="color:#dbdbdb;"></i>
+</div>
 
 </body>
 </html>
