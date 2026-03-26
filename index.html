@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Ткуарчал App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net">
+  <style>
+    .page-content { background: #f0f2f5; padding-bottom: 100px; }
+    .card-header { height: 200px; background-size: cover; background-position: center; color: white; text-shadow: 2px 2px 4px #000; font-weight: bold; }
+    .navbar { background: #2c3e50; color: white; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="view view-main">
+      <div class="page">
+        <div class="navbar"><div class="navbar-inner"><div class="title">Ткуарчал: Smart City</div></div></div>
+        
+        <!-- НИЖНЕЕ МЕНЮ -->
+        <div class="toolbar toolbar-bottom tabbar-labels">
+          <div class="toolbar-inner">
+            <a href="#tab-1" class="tab-link tab-link-active"><i class="icon f7-icons">cloud_sun</i><span class="tabbar-label">Погода</span></a>
+            <a href="#tab-2" class="tab-link"><i class="icon f7-icons">map</i><span class="tabbar-label">Туризм</span></a>
+            <a href="#tab-3" class="tab-link"><i class="icon f7-icons">sport</i><span class="tabbar-label">Спорт</span></a>
+            <a href="#tab-4" class="tab-link"><i class="icon f7-icons">phone</i><span class="tabbar-label">Службы</span></a>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <!-- ПОГОДА И НОВОСТИ -->
+          <div id="tab-1" class="page-content tab tab-active">
+            <div class="block-title">Погода сегодня</div>
+            <div class="card"><div class="card-content card-content-padding">☀️ Ткуарчал: +22°C. Хорошего дня!</div></div>
+            <div class="block-title">Свежие Новости</div>
+            <div class="card"><div class="card-content card-content-padding"><b>Новость:</b> В городе начались работы по благоустройству парка.</div></div>
+          </div>
+
+          <!-- ТУРИЗМ -->
+          <div id="tab-2" class="page-content tab">
+            <div class="card"><div style="background-image:url(https://img.tourister.ru)" class="card-header align-items-flex-end">Водопад Великан</div>
+              <div class="card-content card-content-padding"><button class="button button-fill color-green" onclick="window.open('https://maps.google.com')">📍 Местоположение</button></div>
+            </div>
+          </div>
+
+          <!-- СПОРТ -->
+          <div id="tab-3" class="page-content tab">
+            <div class="block-title">Лучшие спортсмены Ткуарчала</div>
+            <div class="list media-list">
+              <ul>
+                <li><div class="item-content"><div class="item-inner"><div class="item-title-row"><div class="item-title">Спортивная школа</div></div><div class="item-text">Здесь будут имена чемпионов и тренеров города.</div></div></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- СЛУЖБЫ -->
+          <div id="tab-4" class="page-content tab">
+            <div class="list links-list">
+              <ul>
+                <li><a href="tel:103">🚑 Скорая помощь: 103</a></li>
+                <li><a href="tel:101">🔥 Пожарные: 101</a></li>
+                <li><a href="#">🚌 Автобус в Псоу: 08:30</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- КНОПКА "ИДЕТ" (ПРЕДЛОЖЕНИЯ) -->
+        <div class="fab fab-right-bottom color-orange">
+          <a href="#"><i class="icon f7-icons">plus</i></a>
+          <div class="fab-buttons fab-buttons-top">
+            <a href="#" class="fab-label-button" onclick="app.dialog.prompt('Напишите вашу идею по улучшению города', function(val){ app.dialog.alert('Спасибо! Ваша идея принята.'); })">
+              <span>💡</span><span class="fab-label">Идет</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net"></script>
+  <script>var app = new Framework7({ el: '#app' });</script>
+</body>
+</html>
