@@ -5,151 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Smart Tkuarchal</title>
     <style>
-        :root { --primary: #3b4cca; --bg: #f5f6fa; --text: #2d3436; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; color: var(--text); overflow-x: hidden; }
+        :root { --primary: #3b4cca; --bg: #f5f6fa; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* ШАПКА */
         header { 
-            background: var(--primary); padding: 45px 25px 75px; 
-            border-radius: 0 0 45px 45px; color: white; text-align: center;
+            background: linear-gradient(135deg, #3b4cca 0%, #1e293b 100%); 
+            padding: 50px 25px 80px; border-radius: 0 0 45px 45px; color: white; text-align: center;
         }
-        header h1 { margin: 0; font-size: 30px; font-weight: 900; font-style: italic; letter-spacing: -1px; }
-        header p { margin: 5px 0 0; font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1.5px; }
+        header h1 { margin: 0; font-size: 32px; font-weight: 900; font-style: italic; }
 
-        /* ИНСТА-ЛЕНТА (ТУРИЗМ И НОВОСТИ) */
-        .insta-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 20px; gap: 15px; scrollbar-width: none; }
-        .insta-scroll::-webkit-scrollbar { display: none; }
+        /* ЦЕНТРАЛЬНАЯ ОБЛАСТЬ */
+        #content-display { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        .insta-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 15px 20px; gap: 15px; width: 100%; box-sizing: border-box; }
         .insta-item { flex: 0 0 85%; scroll-snap-align: center; background: white; border-radius: 35px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .insta-img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
-        .insta-info { padding: 20px; }
-        .insta-info h4 { margin: 0; font-size: 18px; font-weight: 800; text-transform: uppercase; }
-        .insta-info p { margin: 8px 0 0; color: #636e72; font-size: 14px; line-height: 1.4; }
+        
+        /* КНОПКИ ТАББАРА */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 85px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 35px 35px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05); z-index: 1000; }
+        .nav-link { font-size: 30px; color: #cbd5e1; padding: 15px; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        /* Стиль для активной (нажатой) кнопки */
+        .nav-link.active { color: var(--primary); transform: translateY(-12px) scale(1.2); }
 
-        /* СПИСОК (СПОРТ, СЛУЖБЫ, РЕЙСЫ) */
-        .list-container { padding: 0 20px; }
-        .item-card { 
-            background: white; margin-bottom: 12px; padding: 18px; 
-            border-radius: 28px; display: flex; align-items: center; gap: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
-        }
-        .item-photo { width: 60px; height: 60px; border-radius: 20px; object-fit: cover; background: #f1f2f6; border: 2px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
-        .item-text h4 { margin: 0; font-size: 16px; font-weight: 800; text-transform: uppercase; }
-        .item-text p { margin: 2px 0 0; font-size: 12px; font-weight: 600; color: #94a3b8; }
-
-        /* КНОПКА ИДЕЙ */
-        .action-btn { 
-            margin: 20px; padding: 20px; background: white; border-radius: 30px; 
-            text-align: center; font-weight: 800; color: var(--primary); 
-            border: 2px dashed var(--primary); cursor: pointer; font-size: 12px;
-        }
-
-        /* МОДАЛЬНОЕ ОКНО */
-        #modal-box { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2000; align-items: center; justify-content: center; padding: 25px; box-sizing: border-box; }
-        .modal-content { background: white; width: 100%; max-width: 400px; padding: 35px; border-radius: 40px; text-align: center; }
-        textarea { width: 100%; height: 130px; border-radius: 20px; border: 1px solid #ddd; padding: 18px; margin-bottom: 15px; font-family: inherit; box-sizing: border-box; font-size: 15px; }
-        .btn-send { background: var(--primary); color: white; border: none; padding: 18px; border-radius: 22px; width: 100%; font-weight: 800; cursor: pointer; box-shadow: 0 5px 15px rgba(59, 76, 202, 0.3); }
-
-        /* ТАББАР */
-        .nav-bar { 
-            position: fixed; bottom: 0; width: 100%; height: 85px; 
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); 
-            display: flex; justify-content: space-around; align-items: center; 
-            border-radius: 35px 35px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05); 
-        }
-        .nav-link { font-size: 26px; text-decoration: none; color: #cbd5e1; transition: 0.3s; }
-        .nav-link.active { color: var(--primary); transform: translateY(-8px); }
+        .status-msg { text-align: center; padding: 60px; color: #b2bec3; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>admin</h1>
-    <p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p>
-</header><div id="ui-wrapper">
-    <div class="action-btn" onclick="openModal('ideas')">💡 ЕСТЬ ИДЕЯ ДЛЯ ГОРОДА? НАПИШИ!</div>
-    <div id="content-display"></div>
-</div>
+<header><h1>admin</h1><p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p></header>
 
-<!-- Модалка -->
-<div id="modal-box" onclick="closeModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 id="modal-head" style="margin-top:0">Твоя идея</h2>
-        <textarea id="msg-input" placeholder="Напиши что-нибудь важное..."></textarea>
-        <button class="btn-send" onclick="sendToSheet()">ОТПРАВИТЬ</button>
-    </div>
+<div id="content-display">
+    <div class="status-msg">Запуск системы...</div>
 </div>
 
 <nav class="nav-bar">
-    <a href="#" class="nav-link active" onclick="render('tourism')">🏠</a>
-    <a href="#" class="nav-link" onclick="render('news')">📰</a>
-    <a href="#" class="nav-link" onclick="render('рейсы')">🚌</a>
-    <a href="#" class="nav-link" onclick="render('sport')">🏆</a>
-    <a href="#" class="nav-link" onclick="render('Службы')">📞</a>
+    <div class="nav-link" id="nav-tourism" onclick="loadData('tourism', this)">🏠</div>
+    <div class="nav-link" id="nav-news" onclick="loadData('news', this)">📰</div>
+    <div class="nav-link" id="nav-bus" onclick="loadData('рейсы', this)">🚌</div>
+    <div class="nav-link" id="nav-sport" onclick="loadData('sport', this)">🏆</div>
+    <div class="nav-link" id="nav-help" onclick="loadData('Службы', this)">📞</div>
 </nav>
 
-<script>
-    const EXEC_URL = "https://script.google.com";
-    let targetTab = 'ideas';
+<script src="script.js"></script>
 
-    async function render(tab) {
-        const box = document.getElementById('content-display');
-        box.innerHTML = '<center style="padding:50px; color:#b2bec3; font-weight:800; font-size:12px; letter-spacing:1px;">ЗАГРУЗКА...</center>';
-        
-        try {
-            const r = await fetch(EXEC_URL + "?type=" + encodeURIComponent(tab));
-            const data = await r.json();
-            box.innerHTML = '';
-
-            if (tab === 'sport') {
-                box.innerHTML = <div class="action-btn" style="border-style:solid; background:var(--primary); color:white;" onclick="openModal('chat_sport')">💬 ЧАТ СПОРТСМЕНОВ</div>;
-            }
-
-            if (tab === 'tourism' || tab === 'news') {
-                box.className = 'insta-scroll';
-                data.forEach(item => {
-                    const row = Object.values(item);
-                    box.innerHTML += 
-                        <div class="insta-item">
-                            <img src="${row[2] || 'https://via.placeholder.com'}" class="insta-img">
-                            <div class="insta-info"><h4>${row[0]}</h4><p>${row[1] || ''}</p></div>
-                        </div>;
-                });
-            } else {
-                box.className = 'list-container';
-                data.forEach(item => {
-                    const row = Object.values(item);
-                    let photo = row[2] ? <img src="${row[2]}" class="item-photo"> : <div class="item-photo" style="display:flex;align-items:center;justify-content:center;font-size:24px">${tab==='Службы'?'📞':'🏆'}</div>;
-                    box.innerHTML += 
-                        <div class="item-card">${photo}<div class="item-text"><h4>${row[0]}</h4><p>${row[1] || ''}</p></div></div>;
-                });
-            }
-        } catch (e) { box.innerHTML = '<center>ОШИБКА СВЯЗИ</center>'; }
-    }
-
-    function openModal(dest) {
-        targetTab = dest;
-        document.getElementById('modal-box').style.display = 'flex';
-        document.getElementById('modal-head').innerText = dest === 'ideas' ? 'Твоя идея' : 'Спортивный чат';
-    }
-
-    function closeModal() { document.getElementById('modal-box').style.display = 'none'; }
-
-    async function sendToSheet() {
-        const text = document.getElementById('msg-input').value;
-        if (!text) return;
-        const btn = document.querySelector('.btn-send');
-        btn.innerText = "ОТПРАВКА...";
-        try {
-            await fetch(EXEC_URL, { method: 'POST', body: JSON.stringify({ target: targetTab, text: text }) });
-            alert("Готово!");
-            document.getElementById('msg-input').value = '';
-            closeModal();
-            render(targetTab);
-        } catch (e) { alert("Отправлено!"); closeModal(); }
-        btn.innerText = "ОТПРАВИТЬ";
-    }
-
-    window.onload = () => { render('tourism'); };
-</script>
 </body>
 </html>
