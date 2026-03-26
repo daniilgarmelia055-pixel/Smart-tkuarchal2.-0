@@ -6,53 +6,57 @@
     <title>Smart Tkuarchal</title>
     <style>
         :root { --primary: #3b4cca; --bg: #f5f6fa; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; color: #2d3436; overflow-x: hidden; }
-        
-        /* ТВОЙ СИНИЙ ГРАДИЕНТ */
-        header { 
-            background: linear-gradient(135deg, #3b4cca 0%, #1e293b 100%); 
-            padding: 50px 25px 80px; border-radius: 0 0 45px 45px; color: white; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        header h1 { margin: 0; font-size: 32px; font-weight: 900; font-style: italic; }
-
-        /* ЦЕНТРАЛЬНАЯ ОБЛАСТЬ (ЛЕНТА) */
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        header { background: linear-gradient(135deg, #3b4cca 0%, #1e293b 100%); padding: 50px 25px 80px; border-radius: 0 0 45px 45px; color: white; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 30px; font-weight: 900; font-style: italic; }
         #content-area { min-height: 350px; display: flex; flex-direction: column; }
-        
-        /* Инста-лента (горизонтальная) */
         .insta-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 15px 20px; gap: 15px; width: 100%; box-sizing: border-box; scrollbar-width: none; }
-        .insta-scroll::-webkit-scrollbar { display: none; }
         .insta-item { flex: 0 0 85%; scroll-snap-align: center; background: white; border-radius: 35px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .insta-img { width: 100%; height: 240px; object-fit: cover; background: #eee; }
-        
-        /* ТАББАР (КНОПКИ ВНИЗУ) */
         .nav-bar { position: fixed; bottom: 0; width: 100%; height: 85px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 35px 35px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05); z-index: 1000; }
         .nav-link { font-size: 30px; color: #cbd5e1; padding: 15px; cursor: pointer; transition: 0.3s; }
         .nav-link.active { color: var(--primary); transform: translateY(-12px) scale(1.1); }
-
-        .status-msg { text-align: center; padding: 80px 20px; color: #b2bec3; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
+        .status-msg { text-align: center; padding: 80px 20px; color: #b2bec3; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>admin</h1>
-    <p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p>
-</header>
-
-<!-- ОБЛАСТЬ ДЛЯ ДАННЫХ ИЗ ТАБЛИЦЫ -->
-<div id="content-area"></div>
-
-<nav class="nav-bar">
-    <div class="nav-link" id="btn-home" onclick="loadData('tourism', this)">🏠</div>
-    <div class="nav-link" onclick="loadData('news', this)">📰</div>
-    <div class="nav-link" onclick="loadData('рейсы', this)">🚌</div>
-    <div class="nav-link" onclick="loadData('sport', this) ">🏆</div>
-    <div class="nav-link" onclick="loadData('Службы', this)">📞</div>
-</nav>
-
-<!-- ТВОЙ НОВЫЙ ФАЙЛ СВЯЗИ -->
-<script src="script.js"></script>
-
+    <header><h1>admin</h1><p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p></header>
+    <div id="content-area"></div>
+    <nav class="nav-bar">
+        <div class="nav-link active" id="btn-home" onclick="loadData('tourism', this)">🏠</div>
+        <div class="nav-link" onclick="loadData('news', this)">📰</div>
+        <div class="nav-link" onclick="loadData('рейсы', this)">🚌</div>
+        <div class="nav-link" onclick="loadData('sport', this)">🏆</div>
+        <div class="nav-link" onclick="loadData('Службы', this)">📞</div>
+    </nav>
+    <script>
+        const APP_URL = "https://script.google.com";
+        async function loadData(tab, element) {
+            if (element) {
+                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+            }
+            const area = document.getElementById('content-area');
+            area.innerHTML = '<div class="status-msg">СИНХРОНИЗАЦИЯ...</div>';
+            area.className = ''; 
+            try {
+                const r = await fetch(APP_URL + "?type=" + encodeURIComponent(tab));
+                const data = await r.json();
+                area.innerHTML = '';
+                if (data && data.length > 0) {
+                    area.className = 'insta-scroll';
+                    data.forEach(item => {
+                        const v = Object.values(item);
+                        area.innerHTML += <div class="insta-item"><img src="${v || ''}" class="insta-img"><div style="padding:20px;"><h4>${v}</h4><p>${v || ''}</p></div></div>;
+                    });
+                } else {
+                    area.innerHTML = <div class="status-msg">РАЗДЕЛ "${tab.toUpperCase()}"<br>ПОКА ПУСТО 🍃</div>;
+                }
+            } catch (e) {
+                area.innerHTML = '<div class="status-msg" style="color:#ff7675;">ОШИБКА СВЯЗИ 🌐</div>';
+            }
+        }
+        window.onload = () => { loadData('tourism', document.getElementById('btn-home')); };
+    </script>
 </body>
 </html>
