@@ -6,46 +6,52 @@
     <title>Smart Tkuarchal</title>
     <style>
         :root { --primary: #3b4cca; --bg: #f5f6fa; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding-bottom: 100px; color: #2d3436; overflow-x: hidden; }
         
+        /* ТВОЙ СИНИЙ ГРАДИЕНТ */
         header { 
             background: linear-gradient(135deg, #3b4cca 0%, #1e293b 100%); 
             padding: 50px 25px 80px; border-radius: 0 0 45px 45px; color: white; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         header h1 { margin: 0; font-size: 32px; font-weight: 900; font-style: italic; }
 
-        /* ЦЕНТРАЛЬНАЯ ОБЛАСТЬ */
-        #content-display { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        /* ЦЕНТРАЛЬНАЯ ОБЛАСТЬ (ЛЕНТА) */
+        #content-area { min-height: 350px; display: flex; flex-direction: column; }
         
-        .insta-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 15px 20px; gap: 15px; width: 100%; box-sizing: border-box; }
+        /* Инста-лента (горизонтальная) */
+        .insta-scroll { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 15px 20px; gap: 15px; width: 100%; box-sizing: border-box; scrollbar-width: none; }
+        .insta-scroll::-webkit-scrollbar { display: none; }
         .insta-item { flex: 0 0 85%; scroll-snap-align: center; background: white; border-radius: 35px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .insta-img { width: 100%; height: 240px; object-fit: cover; background: #eee; }
         
-        /* КНОПКИ ТАББАРА */
+        /* ТАББАР (КНОПКИ ВНИЗУ) */
         .nav-bar { position: fixed; bottom: 0; width: 100%; height: 85px; background: white; display: flex; justify-content: space-around; align-items: center; border-radius: 35px 35px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05); z-index: 1000; }
-        .nav-link { font-size: 30px; color: #cbd5e1; padding: 15px; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
-        /* Стиль для активной (нажатой) кнопки */
-        .nav-link.active { color: var(--primary); transform: translateY(-12px) scale(1.2); }
+        .nav-link { font-size: 30px; color: #cbd5e1; padding: 15px; cursor: pointer; transition: 0.3s; }
+        .nav-link.active { color: var(--primary); transform: translateY(-12px) scale(1.1); }
 
-        .status-msg { text-align: center; padding: 60px; color: #b2bec3; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
+        .status-msg { text-align: center; padding: 80px 20px; color: #b2bec3; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-<header><h1>admin</h1><p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p></header>
+<header>
+    <h1>admin</h1>
+    <p>ТКУАРЧАЛ В ТВОЕМ КАРМАНЕ</p>
+</header>
 
-<div id="content-display">
-    <div class="status-msg">Запуск системы...</div>
-</div>
+<!-- ОБЛАСТЬ ДЛЯ ДАННЫХ ИЗ ТАБЛИЦЫ -->
+<div id="content-area"></div>
 
 <nav class="nav-bar">
-    <div class="nav-link" id="nav-tourism" onclick="loadData('tourism', this)">🏠</div>
-    <div class="nav-link" id="nav-news" onclick="loadData('news', this)">📰</div>
-    <div class="nav-link" id="nav-bus" onclick="loadData('рейсы', this)">🚌</div>
-    <div class="nav-link" id="nav-sport" onclick="loadData('sport', this)">🏆</div>
-    <div class="nav-link" id="nav-help" onclick="loadData('Службы', this)">📞</div>
+    <div class="nav-link" id="btn-home" onclick="loadData('tourism', this)">🏠</div>
+    <div class="nav-link" onclick="loadData('news', this)">📰</div>
+    <div class="nav-link" onclick="loadData('рейсы', this)">🚌</div>
+    <div class="nav-link" onclick="loadData('sport', this) ">🏆</div>
+    <div class="nav-link" onclick="loadData('Службы', this)">📞</div>
 </nav>
 
+<!-- ТВОЙ НОВЫЙ ФАЙЛ СВЯЗИ -->
 <script src="script.js"></script>
 
 </body>
