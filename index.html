@@ -5,57 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Smart Tkuarchal</title>
     <style>
-        :root { --primary: #2563eb; --primary-dark: #1d4ed8; --bg: #f8fafc; --text: #1e293b; }
-        body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding-bottom: 100px; color: var(--text); overflow-x: hidden; }
-        header { padding: 50px 25px 80px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-radius: 0 0 45px 45px; text-align: center; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2); }
-        header h1 { margin: 0; font-size: 32px; font-weight: 900; text-transform: lowercase; }
-        .weather-card { background: white; margin: -45px 20px 25px; padding: 22px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 10; }
+        :root { --primary: #2563eb; --primary-dark: #1d4ed8; --bg: #f8fafc; }
+        body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        
+        /* КРУТОЙ ГРАДИЕНТНЫЙ HEADER */
+        header {
+            padding: 50px 25px 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; border-radius: 0 0 45px 45px; text-align: center;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+        }
+        header h1 { margin: 0; font-size: 32px; font-weight: 900; letter-spacing: -1.5px; text-transform: lowercase; }
+
+        /* ЭФФЕКТ НАПЛЫВА ПОГОДЫ */
+        .weather-card {
+            background: white; margin: -45px 20px 25px; padding: 22px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06); display: flex; justify-content: space-between;
+            align-items: center; position: relative; z-index: 10;
+        }
         .temp { font-size: 36px; font-weight: 900; color: var(--primary); }
+
+        /* СЕТКА КНОПОК (ВЫСОКИЙ Z-INDEX ДЛЯ СЕНСОРА) */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; position: relative; z-index: 999; }
-        .card { background: white; padding: 25px 15px; border-radius: 32px; text-align: center; font-weight: 700; box-shadow: 0 8px 20px rgba(0,0,0,0.03); cursor: pointer; }
+        .card {
+            background: white; padding: 25px 15px; border-radius: 32px; text-align: center;
+            font-weight: 700; box-shadow: 0 8px 20px rgba(0,0,0,0.03); cursor: pointer;
+        }
+        .card:active { transform: scale(0.92); background: #f8fafc; }
+
+        /* СПИСОК КОНТЕНТА ИЗ ТАБЛИЦЫ */
         #content-list { padding: 25px 20px; display: flex; flex-direction: column; gap: 15px; }
-        .content-item { background: white; padding: 20px; border-radius: 28px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); border-left: 6px solid var(--primary); }
-        .nav-bar { position: fixed; bottom: 0; width: 100%; height: 85px; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); display: flex; justify-content: space-around; align-items: center; border-radius: 35px 35px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); z-index: 1000; }
+        .content-item {
+            background: white; padding: 22px; border-radius: 28px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02); border-left: 6px solid var(--primary);
+        }
+
+        /* ТАББАР */
+        .nav-bar {
+            position: fixed; bottom: 0; width: 100%; height: 85px; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px); display: flex; justify-content: space-around;
+            align-items: center; border-radius: 35px 35px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); z-index: 1000;
+        }
         .nav-link { font-size: 26px; text-decoration: none; color: #cbd5e1; }
-        .loader { text-align: center; padding: 40px; color: #94a3b8; }
     </style>
 </head>
 <body>
+
 <header><h1>tkuarchal</h1><p>твой город в твоем кармане</p></header>
-<div class="weather-card"><div><div style="font-size: 11px; color: #94a3b8; font-weight: 800;">ПОГОДА ТКУАРЧАЛ</div><div class="temp" id="temp">--°C</div></div><div style="font-size: 45px;">☀️</div></div>
+
+<div class="weather-card">
+    <div><div style="font-size: 11px; color: #94a3b8; font-weight: 800;">ПОГОДА СЕЙЧАС</div><div class="temp" id="temp">--°C</div></div>
+    <div style="font-size: 45px;">☀️</div>
+</div>
+
 <div class="grid">
     <div class="card" onclick="loadData('Службы')" style="color: #ef4444; background: #fff1f2;">🚨 SOS</div>
     <div class="card" onclick="loadData('tourism')">🏔️ Туризм</div>
     <div class="card" onclick="loadData('sport')">⚽ Спорт</div>
     <div class="card" onclick="loadData('Службы')">📞 Службы</div>
 </div>
+
 <div id="content-list"></div>
-<nav class="nav-bar"><a href="#" class="nav-link">🏠</a><a href="#" class="nav-link">📩</a><a href="#" class="nav-link">📍</a><a href="#" class="nav-link">👤</a></nav>
-<script>
-    const APP_URL = "https://script.google.com";
-    async function fetchWeather() {
-        try {
-            const res = await fetch("https://api.open-meteo.com");
-            const data = await res.json();
-            const t = Math.round(data.current_weather.temperature);
-            document.getElementById('temp').innerText = (t > 0 ? '+' : '') + t + "°C";
-        } catch (e) { document.getElementById('temp').innerText = "??°C"; }
-    }
-    async function loadData(tabName) {
-        const container = document.getElementById('content-list');
-        container.innerHTML = '<div class="loader">Синхронизация...</div>';
-        try {
-            const res = await fetch(${APP_URL}?type=${encodeURIComponent(tabName)});
-            const data = await res.json();
-            container.innerHTML = '';
-            if (data && data.length > 0) {data.forEach(item => {
-                    const v = Object.values(item);
-                    container.innerHTML += <div class="content-item"><h4>${v}</h4><p>${v}</p></div>;
-                });
-            } else { container.innerHTML = '<div class="loader">Пусто 🍃</div>'; }
-        } catch (e) { container.innerHTML = '<div class="loader">Ошибка связи 🌐</div>'; }
-    }
-    window.onload = () => { fetchWeather(); loadData('tourism'); };
-</script>
+
+<nav class="nav-bar">
+    <a href="#" class="nav-link">🏠</a><a href="#" class="nav-link">✉️</a><a href="#" class="nav-link">📍</a><a href="#" class="nav-link">👤</a>
+</nav>
+
+<!-- ПОДКЛЮЧАЕМ ТВОЙ script.js В САМОМ КОНЦЕ -->
+<script src="script.js"></script>
+
 </body>
 </html>
